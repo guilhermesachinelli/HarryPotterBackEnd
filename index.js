@@ -66,10 +66,10 @@ app.get('/bruxos/:id', async (req, res) => {
         res.status(500).json({ message: 'Erro ao buscar bruxo por id' });
     }
 });
-app.get('/bruxos/nome/:nome', async (req, res) => {
+app.get('/bruxos/nome/:letra', async (req, res) => {
     try {
-        const { nome } = req.params;
-        const result = await pool.query('SELECT * FROM bruxos WHERE nome = $1', [nome]);
+        const{letra} = req.params;
+        const result = await pool.query('SELECT * FROM bruxos LIKE $1', ['%' + letra + '%']);
         if (result.rowCount === 0) {
             res.status(404).json({ message: 'Bruxo não encontrado' });
         } else {
